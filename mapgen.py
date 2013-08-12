@@ -220,11 +220,3 @@ class MapTemplate(object):
             col_counter += 1
 
         tree.write("terrain.xml")
-
-
-
-
-
-
-
-
