@@ -7,8 +7,8 @@ Instructions:
 - Press "V" to zoom out and view entire map.
 
 Recent Changes:
-- Added third terrain pass that generates caves
-- Added second terrain pass that generates the ground layers.
+- Map now generates vegetation at surface and ore deposits beneath ground level.
 
 TODO:
--Make the noise input variables random.
+- Make the noise input variables random.
+- Save/Load map menu.

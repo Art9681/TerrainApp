@@ -12,9 +12,12 @@ class GameScene(cocos.scene.Scene):
         self.dt = 1/60
 
         #The layers this scene has.
+        self.sky_layer = cocos.layer.ColorLayer(100, 120, 150, 255)
         self.scroller = layers.TerrainScroller(director)
 
-        self.add(self.scroller.scroller, z=0)
+
+        self.add(self.sky_layer, z=0)
+        self.add(self.scroller.scroller, z=1)
 
         #Begin clock tick.
         self.clock.schedule(self.scroller.update)
