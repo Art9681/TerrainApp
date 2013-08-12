@@ -20,6 +20,7 @@ class MapTemplate(object):
 
         self.create_xml_tilemap()
         self.horizon()
+        self.ground_layers()
         self.caves()
 
     #Generates map_template.xml
@@ -81,6 +82,31 @@ class MapTemplate(object):
 
         tree.write("terrain.xml")
 
+    def ground_layers(self):
+        #Open and parse the xml file to change cells according to noise#
+        tree = ET.parse("terrain.xml")
+        root = tree.getroot()
+
+        #The counters that iterate for every column and cell.
+        col_counter = 0
+        cell_counter = 0
+
+        for column in root.iter('column'):
+            self.col_height = self.col_height + self.column_height_values[col_counter]
+            col_counter += 1
+            cell_counter = 0
+
+            for cell in column:
+                cell_counter += 1
+                if cell_counter < self.col_height-30 + random.randrange(-5, 5):
+
+                    cell.set('tile', 'rock')
+
+                if cell_counter < self.col_height-60 + random.randrange(-5, 5):
+                    cell.set('tile', 'sand')
+
+        tree.write("terrain.xml")
+
     def caves(self):
         ##3D Terrain Noise##
         #This counter is incremented every time the terrain gen loops through inserting a cell into a row.
@@ -115,8 +141,9 @@ class MapTemplate(object):
 
             for cell in column:
                 cell_counter += 1
-                if cell_counter < self.col_height-8:
-                    cell.set('tile', 'rock' if noise_data[noise_counter] <= 128 else ('air'))
+                if cell_counter < self.col_height-30 + random.randrange(-5, 5):
+                    if noise_data[noise_counter] >= 128:
+                        cell.set('tile', 'air')
 
                 noise_counter += 1
 

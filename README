@@ -7,7 +7,8 @@ Instructions:
 - Press "V" to zoom out and view entire map.
 
 Recent Changes:
-- Added second terrain pass that generates caves.
+- Added third terrain pass that generates caves
+- Added second terrain pass that generates the ground layers.
 
 TODO:
 -Make the noise input variables random.
