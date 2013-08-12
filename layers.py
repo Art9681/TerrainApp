@@ -17,20 +17,14 @@ class TerrainScroller(object):
         #Begin Keyboard code.
         keyboard = key.KeyStateHandler()
         director.window.push_handlers(keyboard)
-        director.window.push_handlers(self.on_mouse_scroll)
+        director.window.push_handlers(self.on_key_press)
 
     def update(self, dt):
         pass
 
-    _desired_scale = 1
-    def on_mouse_scroll(self, x, y, dx, dy):
-        #Zooms the map.
-        if dy < 0:
-            if self._desired_scale < .2: return True
-            self._desired_scale -= .1
-        elif dy > 0:
-            if self._desired_scale > 2: return True
-            self._desired_scale = 0
-        if dy:
-            self.scroller.do(cocos.actions.ScaleTo(self._desired_scale, .1))
-            return True
+    #Begin input code.
+    def on_key_press(self, symbol, modifiers):
+        if symbol == key.V:
+            #Zooms out to view entire map layer.
+            self.scroller.do(cocos.actions.ScaleTo(0.2, .1))
+

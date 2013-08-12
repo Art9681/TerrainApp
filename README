@@ -1,1 +1,13 @@
-This file was created by PyCharm 2.7.3 for binding GitHub repository
+TerrainApp - A procedural 2D tilemap generator.
+
+Requires Python 2.7 with the Pyglet, cocos2D and noise libraries.
+
+Instructions:
+-Run main.py to launch.
+- Press "V" to zoom out and view entire map.
+
+Recent Changes:
+- Added second terrain pass that generates caves.
+
+TODO:
+-Make the noise input variables random.
