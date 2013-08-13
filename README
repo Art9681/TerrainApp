@@ -7,6 +7,7 @@ Instructions:
 - Press "V" to zoom out and view entire map.
 
 Recent Changes:
+- Added basic camera panning.
 - Map now generates vegetation at surface and ore deposits beneath ground level.
 
 TODO:

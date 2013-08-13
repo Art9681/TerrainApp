@@ -13,7 +13,7 @@ class GameScene(cocos.scene.Scene):
 
         #The layers this scene has.
         self.sky_layer = cocos.layer.ColorLayer(100, 120, 150, 255)
-        self.scroller = layers.TerrainScroller(director)
+        self.scroller = layers.TerrainScroller(director, self.clock)
 
 
         self.add(self.sky_layer, z=0)
