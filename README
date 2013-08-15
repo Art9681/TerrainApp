@@ -11,5 +11,9 @@ Recent Changes:
 - Map now generates vegetation at surface and ore deposits beneath ground level.
 
 TODO:
+- Stop player rotation, and fix angle when map rotates and player lands.
+- Disable grass shrub and cave tile collisions.
+- Generate cave tile instead of air tile when destroying block at cave level.
+- Dynamically load tiles at runtime so map size is much bigger.
 - Make the noise input variables random.
 - Save/Load map menu.

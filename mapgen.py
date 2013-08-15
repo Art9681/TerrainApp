@@ -1,6 +1,7 @@
 import xml.etree.cElementTree as ET
 import random
 from noise import snoise2, pnoise1
+import pyglet
 
 class MapTemplate(object):
     def __init__(self):
@@ -20,11 +21,6 @@ class MapTemplate(object):
         self.column_height_values = []
 
         self.create_xml_tilemap()
-
-
-
-
-
 
     #Generates map_template.xml
     def create_xml_tilemap(self):
@@ -48,9 +44,11 @@ class MapTemplate(object):
 
         self.tree = ET.ElementTree(self.resource)
         self.tree.write("map_template.xml")
+        print "xml_template created"
         self.horizon()
 
     def horizon(self):
+        print "Parsing map_template for horizon gen"
         '''This method divides ground and sky. It opens and parses the xml
         file generated previously.'''
 
@@ -70,6 +68,8 @@ class MapTemplate(object):
         tree = ET.parse("map_template.xml")
         root = tree.getroot()
 
+        print "Finished root parsing"
+
         #The counters that iterate for every column and cell.
         self.col_counter = 0
         self.cell_counter = 0
@@ -86,6 +86,7 @@ class MapTemplate(object):
                     cell.set('tile', 'air')
 
         tree.write("terrain.xml")
+        root.clear()
         self.ground_layers()
 
     def ground_layers(self):
@@ -112,6 +113,7 @@ class MapTemplate(object):
                     cell.set('tile', 'sand')
 
         tree.write("terrain.xml")
+        root.clear()
         self.ore_deposits()
 
     def ore_deposits(self):
@@ -156,6 +158,7 @@ class MapTemplate(object):
                 noise_counter += 1
 
         tree.write("terrain.xml")
+        root.clear()
         self.caves()
 
     def caves(self):
@@ -196,6 +199,7 @@ class MapTemplate(object):
                 noise_counter += 1
 
         tree.write("terrain.xml")
+        root.clear()
         self.vegetation()
 
     def vegetation(self):
@@ -220,3 +224,37 @@ class MapTemplate(object):
             col_counter += 1
 
         tree.write("terrain.xml")
+        root.clear()
+
+def segment_gen(maptemplate, physics_layer):
+    #Begin physics segment collider generation. (This is crazy!)
+        air_cells = []
+        #Get each air cell in the map and append to air_cell list.
+        for air_cell in maptemplate.find_cells(btype="air"):
+            air_cells.append(air_cell)
+
+        #Get the neighbor for each air cell. For each neighbor, determine its block type.
+        for air_cell in air_cells:
+            cell_neighbors = maptemplate.get_neighbors(air_cell)
+
+            top = cell_neighbors[(0, 1)]
+            if top:
+                if top.tile.properties['btype'] != 'air':
+                    physics_layer.create_segment(start=(air_cell.position[0], air_cell.position[1]+32), end=((air_cell.position[0]+32),air_cell.position[1]+32))
+
+            bottom = cell_neighbors[(0, -1)]
+            if bottom:
+                if bottom.tile.properties['btype'] != 'air':
+                    physics_layer.create_segment(start=(air_cell.position[0], air_cell.position[1]), end=((air_cell.position[0]+32),air_cell.position[1]))
+
+            right = cell_neighbors[(1, 0)]
+            if right:
+                if right.tile.properties['btype'] != 'air':
+                    physics_layer.create_segment(start=(air_cell.position[0]+32, air_cell.position[1]), end=((air_cell.position[0]+32),air_cell.position[1]+32))
+
+
+            left = cell_neighbors[(-1, 0)]
+            if left:
+                if left.tile.properties['btype'] != 'air':
+                    physics_layer.create_segment(start=(air_cell.position[0], air_cell.position[1]), end=((air_cell.position[0]),air_cell.position[1]+32))
+
