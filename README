@@ -4,16 +4,22 @@ Requires Python 2.7 with the Pyglet, cocos2D and noise libraries.
 
 Instructions:
 -Run main.py to launch.
-- Press "V" to zoom out and view entire map.
+
+Controls:
+A to move left.
+D to move right.
+SPACE to jump.
+V to zoom out map. (Cannot zoom back in yet!)
+E to rotate map +90 degrees (unfinished, experimenting with this feature. Use at own risk.
 
 Recent Changes:
-- Added basic camera panning.
+- Can rotate map and physics respond accordingly.
+- Added player object.
+- Added pymunk physics.
+- Can destroy blocks on mouse click.
 - Map now generates vegetation at surface and ore deposits beneath ground level.
 
 TODO:
-- Stop player rotation, and fix angle when map rotates and player lands.
-- Disable grass shrub and cave tile collisions.
-- Generate cave tile instead of air tile when destroying block at cave level.
-- Dynamically load tiles at runtime so map size is much bigger.
+- Dynamically load tiles at runtime so map size is much bigger. Use generators?
 - Make the noise input variables random.
 - Save/Load map menu.

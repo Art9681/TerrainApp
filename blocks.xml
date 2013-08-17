@@ -18,58 +18,61 @@
     <tile id="rock">
         <image ref="i-rock" />
         <property name="btype" value="rock" />
-        <property name="top" value="yes" />
+        <property name="collider" type="bool" value="True" />
     </tile>
 
     <tile id="sand">
         <image ref="i-sand" />
         <property name="btype" value="sand" />
-        <property name="top" value="yes" />
+        <property name="collider" type="bool" value="True" />
     </tile>
 
     <tile id="wood">
         <image ref="i-wood" />
         <property name="btype" value="wood" />
-        <property name="top" value="yes" />
+        <property name="collider" type="bool" value="True" />
     </tile>
 
     <tile id="air">
         <image ref="i-air" />
         <property name="btype" value="air" />
+        <property name="collider" type="bool" value="False" />
     </tile>
 
     <tile id="dirt">
         <image ref="i-dirt" />
         <property name="btype" value="dirt" />
-        <property name="top" value="yes" />
+        <property name="collider" type="bool" value="True" />
     </tile>
 
     <tile id="grass">
         <image ref="i-grass" />
         <property name="btype" value="grass" />
-        <property name="top" value="yes" />
+        <property name="collider" type="bool" value="True" />
     </tile>
 
     <tile id="shrub">
         <image ref="i-shrub" />
         <property name="btype" value="shrub" />
+        <property name="collider" type="bool" value="False" />
     </tile>
 
     <tile id="gold">
         <image ref="i-gold" />
         <property name="btype" value="gold" />
-        <property name="top" value="yes" />
+        <property name="collider" type="bool" value="True" />
     </tile>
 
     <tile id="iron">
         <image ref="i-iron" />
         <property name="btype" value="iron" />
-        <property name="top" value="yes" />
+        <property name="collider" type="bool" value="True" />
     </tile>
 
     <tile id="cave">
         <image ref="i-cave-air" />
         <property name="btype" value="cave" />
+        <property name="collider" type="bool" value="False" />
     </tile>
 
  </tileset>

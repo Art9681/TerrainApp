@@ -10,9 +10,9 @@ class Player(object):
         #Pymunk physics variables.
         self.verts = [(-15, -15), (-15, 15), (15, 15), (15, -15)]
         self.mass = 100
-        self.friction = 9
-        self.elasticity = 0
-        self.moment = pymunk.moment_for_poly(self.mass, self.verts)
+        self.friction = 1
+        self.elasticity = 0.0
+        self.moment = pymunk.inf
         self.body = pymunk.Body(self.mass, self.moment)
         self.body.position = position
         self.shape = pymunk.Poly(self.body, self.verts)
@@ -103,19 +103,57 @@ class Player(object):
         self.player_sprite.image = self.player_image_list[-1]
         print "The DOWN key was pressed"
 
-    def walk_right(self):
+    def walk_right(self, view_angle):
         del self.player_image_list[0]
         self.player_image_list.insert(0, self.player_right)
         self.player_image_list.append(self.player_anim_right)
         #self.player_moving_right = True
         self.player_sprite.image = self.player_image_list[-1]
 
-    def walk_left(self):
+        if view_angle == 0:
+            self.body.velocity.x = 200
+        elif view_angle == 90:
+            self.body.velocity.y = -200
+        elif view_angle == 180:
+            self.body.velocity.x = -200
+        elif view_angle == 270:
+            self.body.velocity.y = 200
+
+    def walk_left(self, view_angle):
         del self.player_image_list[0]
         self.player_image_list.insert(0, self.player_left)
         self.player_image_list.append(self.player_anim_left)
         #self.player_moving_left = True
         self.player_sprite.image = self.player_image_list[-1]
+
+        if view_angle == 0:
+            self.body.velocity.x = -200
+        elif view_angle == 90:
+            self.body.velocity.y = 200
+        elif view_angle == 180:
+            self.body.velocity.x = 200
+        elif view_angle == 270:
+            self.body.velocity.y = -200
+
+    def jump(self, view_angle):
+        if view_angle == 0:
+            self.body.apply_impulse(pymunk.Vec2d(0, 40000), (0, 0))
+        elif view_angle == 90:
+            self.body.apply_impulse(pymunk.Vec2d(40000, 0), (0, 0))
+        elif view_angle == 180:
+            self.body.apply_impulse(pymunk.Vec2d(0, -40000), (0, 0))
+        elif view_angle == 270:
+            self.body.apply_impulse(pymunk.Vec2d(-40000, 0), (0, 0))
+
+    def cancel_jump(self, view_angle):
+        if view_angle == 0:
+            self.body.apply_impulse(pymunk.Vec2d(0, -10000), (0, 0))
+        elif view_angle == 90:
+            self.body.apply_impulse(pymunk.Vec2d(-10000, 0), (0, 0))
+        elif view_angle == 180:
+            self.body.apply_impulse(pymunk.Vec2d(0, 10000), (0, 0))
+        elif view_angle == 270:
+            self.body.apply_impulse(pymunk.Vec2d(10000, 0), (0, 0))
 
     #When keys are released, the first element of player_image_list gets replaced with the
     #directional image of the player standing still and removes any animations assigned to its direction from the list.
@@ -146,10 +184,5 @@ class Player(object):
 
     def update(self):
         self.player_sprite.position = self.body.position
-        if self.body.angle != 0.0:
-            self.body.angle = 0.0
-
-        #Rotating code. Grab the physics body's angle and convert it to degrees, then assign that to the
-        #sprite's rotation so we can see it on screen. Neat!
-        self.player_sprite.rotation = -math.degrees(self.body.angle) #Subtract the degrees so the block rolls in the direction we want it to.
-
+        '''if self.body.angle != 0.0:
+            self.body.angle = 0.0'''

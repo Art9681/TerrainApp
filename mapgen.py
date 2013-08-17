@@ -125,9 +125,9 @@ class MapTemplate(object):
 
         noise_data = []
         octaves = random.randint(3, 7)
-        print "Cave Octaves: %s" %octaves
+        print "Ore Octaves: %s" %octaves
         frequency = random.uniform(3.0, 7.0) * octaves
-        print "Cave Noise Frequency: %s" %frequency
+        print "Ore Noise Frequency: %s" %frequency
 
         for y in range(self.columns):
             for x in range (self.rows):
@@ -168,7 +168,7 @@ class MapTemplate(object):
         noise_counter = 0
 
         noise_data = []
-        octaves = random.randint(3, 7)
+        octaves = random.randint(10, 13)
         print "Cave Octaves: %s" %octaves
         frequency = random.uniform(3.0, 7.0) * octaves
         print "Cave Noise Frequency: %s" %frequency
@@ -228,33 +228,33 @@ class MapTemplate(object):
 
 def segment_gen(maptemplate, physics_layer):
     #Begin physics segment collider generation. (This is crazy!)
-        air_cells = []
-        #Get each air cell in the map and append to air_cell list.
-        for air_cell in maptemplate.find_cells(btype="air"):
-            air_cells.append(air_cell)
+        empty_cells = []
+        #Get each air cell in the map and append to cell list.
+        for cell in maptemplate.find_cells(collider=False):
+            empty_cells.append(cell)
 
         #Get the neighbor for each air cell. For each neighbor, determine its block type.
-        for air_cell in air_cells:
-            cell_neighbors = maptemplate.get_neighbors(air_cell)
+        for cell in empty_cells:
+            cell_neighbors = maptemplate.get_neighbors(cell)
 
             top = cell_neighbors[(0, 1)]
             if top:
-                if top.tile.properties['btype'] != 'air':
-                    physics_layer.create_segment(start=(air_cell.position[0], air_cell.position[1]+32), end=((air_cell.position[0]+32),air_cell.position[1]+32))
+                if top.tile.properties['collider'] != False:
+                    physics_layer.create_segment(start=(cell.position[0], cell.position[1]+32), end=((cell.position[0]+32),cell.position[1]+32))
 
             bottom = cell_neighbors[(0, -1)]
             if bottom:
-                if bottom.tile.properties['btype'] != 'air':
-                    physics_layer.create_segment(start=(air_cell.position[0], air_cell.position[1]), end=((air_cell.position[0]+32),air_cell.position[1]))
+                if bottom.tile.properties['collider'] != False:
+                    physics_layer.create_segment(start=(cell.position[0], cell.position[1]), end=((cell.position[0]+32),cell.position[1]))
 
             right = cell_neighbors[(1, 0)]
             if right:
-                if right.tile.properties['btype'] != 'air':
-                    physics_layer.create_segment(start=(air_cell.position[0]+32, air_cell.position[1]), end=((air_cell.position[0]+32),air_cell.position[1]+32))
+                if right.tile.properties['collider'] != False:
+                    physics_layer.create_segment(start=(cell.position[0]+32, cell.position[1]), end=((cell.position[0]+32),cell.position[1]+32))
 
 
             left = cell_neighbors[(-1, 0)]
             if left:
-                if left.tile.properties['btype'] != 'air':
-                    physics_layer.create_segment(start=(air_cell.position[0], air_cell.position[1]), end=((air_cell.position[0]),air_cell.position[1]+32))
+                if left.tile.properties['collider'] != False:
+                    physics_layer.create_segment(start=(cell.position[0], cell.position[1]), end=((cell.position[0]),cell.position[1]+32))
 
