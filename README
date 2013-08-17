@@ -1,6 +1,6 @@
 TerrainApp - A procedural 2D tilemap generator.
 
-Requires Python 2.7 with the Pyglet, cocos2D and noise libraries.
+Requires Python 2.7 with the Pyglet, cocos2D, pymunk and noise libraries.
 
 Instructions:
 -Run main.py to launch.
