@@ -7,7 +7,7 @@ import mapgen
 pyglet.options['debug_gl'] = False
 
 def main():
-    director.init(width=1024, height=1024, do_not_scale=True, caption = "TerrainApp", vsync = False, resizable = False)
+    director.init(width=1024, height=1024, do_not_scale=True, caption = "TerrainApp", vsync = False, resizable = False, audio_backend='pygame')
     director.show_FPS = True
     my_scene = scenes.GameScene(director)
 

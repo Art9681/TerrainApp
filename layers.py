@@ -38,6 +38,11 @@ class TerrainScroller(object):
         self.scroller.add(self.terrain_layer, z=0)
         self.scroller.add(self.physics_layer, z=1)
 
+        #Audio Code
+        self.audio = cocos.audio.music.MusicControl()
+        self.audio.load("Content/Audio/grassy_world.ogg")
+        self.audio.play()
+
         #Begin Keyboard code.
         keyboard = key.KeyStateHandler()
         director.window.push_handlers(keyboard)
@@ -152,7 +157,7 @@ class TerrainScroller(object):
                 #Deletes all pymunk objects from space, except the player object.
                 self.physics_layer.space._remove_shape(i['shape'])
 
-        #The following conditionals determine where to generate segments when a tile is changed to an air tile.
+        #The following conditionals determine where to generate segments when a tile is changed to an air or cave tile.
         if top.tile.properties['collider'] != False:
                     self.physics_layer.create_segment(start=(self.cell.position[0], self.cell.position[1]+32), end=((self.cell.position[0]+32),self.cell.position[1]+32))
 
@@ -232,6 +237,10 @@ class PhysicsLayer(cocos.layer.ScrollableLayer):
                        self.player.shape)
 
     def create_segment(self, start, end):
+        """
+        Used to generate segment colliders during mapgen or tile
+        creation/destruction.
+        """
         self.segment = pymunk.Segment(self.space.static_body, start, end, 1)
         self.segment.elasticity = 0.0
         self.space.add(self.segment)
